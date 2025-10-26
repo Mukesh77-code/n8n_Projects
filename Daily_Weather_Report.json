@@ -1,7 +1,7 @@
 {
-  "createdAt": "2025-10-26T12:56:17.851Z",
-  "updatedAt": "2025-10-26T13:33:44.000Z",
-  "id": "KjArqjcWmhDb0D9i",
+  "createdAt": "2025-10-26T10:53:19.095Z",
+  "updatedAt": "2025-10-26T12:56:23.000Z",
+  "id": "BSHPwONU1CaLPAGW",
   "name": "Daily_Weather_Report",
   "active": true,
   "isArchived": false,
@@ -19,10 +19,10 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        48,
-        32
+        0,
+        0
       ],
-      "id": "0d545a0c-baaf-4895-9741-9c4199879476",
+      "id": "cd888a12-0270-4b2f-9491-08621b3372b0",
       "name": "Schedule Trigger"
     },
     {
@@ -32,10 +32,10 @@
       "type": "n8n-nodes-base.openWeatherMap",
       "typeVersion": 1,
       "position": [
-        256,
-        32
+        208,
+        0
       ],
-      "id": "78df9b47-eb06-46ec-9c1d-e24be47f6c78",
+      "id": "332962e8-a379-4cc3-afa0-141db9849f24",
       "name": "OpenWeatherMap",
       "credentials": {
         "openWeatherMapApi": {
@@ -61,10 +61,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        464,
-        32
+        416,
+        0
       ],
-      "id": "ecdc1485-e39c-414c-a27f-08c7e2cbc2d4",
+      "id": "06350ad2-c221-405e-a2bb-f5ef372f967a",
       "name": "Edit Fields"
     },
     {
@@ -78,10 +78,10 @@
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        672,
-        32
+        624,
+        0
       ],
-      "id": "522a1e12-3014-4733-9cc9-ccbcdfde76e7",
+      "id": "e93c9989-2240-4841-a4e1-13aaf35edcf2",
       "name": "Send email",
       "webhookId": "ddc90f07-a601-40f8-a1f5-7c63e0bb6cae",
       "credentials": {
@@ -128,23 +128,28 @@
     }
   },
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "timezone": "Asia/Kolkata",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
   },
   "staticData": {
     "node:Schedule Trigger": {
       "recurrenceRules": []
     }
   },
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "pinData": {},
-  "versionId": "e1da7c8d-0da4-4afd-8a00-f80db74b9251",
+  "versionId": "7e84d347-45fa-4850-8b3a-e2bd45361482",
   "triggerCount": 1,
   "shared": [
     {
-      "createdAt": "2025-10-26T12:56:17.867Z",
-      "updatedAt": "2025-10-26T12:56:17.867Z",
+      "createdAt": "2025-10-26T10:53:19.106Z",
+      "updatedAt": "2025-10-26T10:53:19.106Z",
       "role": "workflow:owner",
-      "workflowId": "KjArqjcWmhDb0D9i",
+      "workflowId": "BSHPwONU1CaLPAGW",
       "projectId": "7fQJAf9vEuQVS2B5"
     }
   ],
