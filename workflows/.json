@@ -1,0 +1,788 @@
+{
+  "data": [
+    {
+      "createdAt": "2025-10-26T11:54:03.120Z",
+      "updatedAt": "2025-10-26T12:41:09.000Z",
+      "id": "1ZfVbrPt7SMFkhU1",
+      "name": "My workflow 2",
+      "active": false,
+      "isArchived": true,
+      "nodes": [
+        {
+          "parameters": {
+            "rule": {
+              "interval": [
+                {}
+              ]
+            }
+          },
+          "type": "n8n-nodes-base.scheduleTrigger",
+          "typeVersion": 1.2,
+          "position": [
+            0,
+            0
+          ],
+          "id": "a59d0ae3-49c1-42ee-b71e-4517bbb1b4bc",
+          "name": "Schedule Trigger"
+        },
+        {
+          "parameters": {
+            "url": "http://localhost:5678/api/v1/workflows",
+            "sendHeaders": true,
+            "headerParameters": {
+              "parameters": [
+                {
+                  "name": "Authorization"
+                }
+              ]
+            },
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={{ 'Basic ' + $base64.encode('YOUR_USERNAME:YOUR_PASSWORD') }}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.2,
+          "position": [
+            208,
+            0
+          ],
+          "id": "61177ae9-5f4a-41cb-a7a6-b8e54ecdd852",
+          "name": "HTTP Request"
+        },
+        {
+          "parameters": {
+            "resource": "file",
+            "owner": {
+              "__rl": true,
+              "value": "Mukesh77-code",
+              "mode": "list",
+              "cachedResultName": "Mukesh77-code",
+              "cachedResultUrl": "https://github.com/Mukesh77-code"
+            },
+            "repository": {
+              "__rl": true,
+              "value": "Weather_mail",
+              "mode": "list",
+              "cachedResultName": "Weather_mail",
+              "cachedResultUrl": "https://github.com/Mukesh77-code/Weather_mail"
+            },
+            "filePath": "=workflows/{{ $json.name }}.json",
+            "fileContent": "n8n projects",
+            "commitMessage": "My n8n github connection"
+          },
+          "type": "n8n-nodes-base.github",
+          "typeVersion": 1.1,
+          "position": [
+            416,
+            0
+          ],
+          "id": "ffa3ece2-fc1b-4634-b8fb-e2228060f792",
+          "name": "Create a file",
+          "webhookId": "ba7d34c6-1185-4c2a-bdae-6845aab2fa4f",
+          "credentials": {
+            "githubApi": {
+              "id": "pdvMiJUzLwWiU855",
+              "name": "GitHub account"
+            }
+          }
+        }
+      ],
+      "connections": {
+        "Schedule Trigger": {
+          "main": [
+            [
+              {
+                "node": "HTTP Request",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "HTTP Request": {
+          "main": [
+            [
+              {
+                "node": "Create a file",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1"
+      },
+      "staticData": null,
+      "meta": {
+        "templateCredsSetupCompleted": true
+      },
+      "pinData": {},
+      "versionId": "d346a93c-c502-47f8-aa35-71ed1aec9b62",
+      "triggerCount": 0,
+      "shared": [
+        {
+          "createdAt": "2025-10-26T11:54:03.133Z",
+          "updatedAt": "2025-10-26T11:54:03.133Z",
+          "role": "workflow:owner",
+          "workflowId": "1ZfVbrPt7SMFkhU1",
+          "projectId": "7fQJAf9vEuQVS2B5"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "createdAt": "2025-10-26T10:53:19.095Z",
+      "updatedAt": "2025-10-26T12:56:23.000Z",
+      "id": "BSHPwONU1CaLPAGW",
+      "name": "Daily_Weather_Report",
+      "active": true,
+      "isArchived": false,
+      "nodes": [
+        {
+          "parameters": {
+            "rule": {
+              "interval": [
+                {
+                  "triggerAtHour": 17
+                }
+              ]
+            }
+          },
+          "type": "n8n-nodes-base.scheduleTrigger",
+          "typeVersion": 1.2,
+          "position": [
+            0,
+            0
+          ],
+          "id": "cd888a12-0270-4b2f-9491-08621b3372b0",
+          "name": "Schedule Trigger"
+        },
+        {
+          "parameters": {
+            "cityName": "Tirupati"
+          },
+          "type": "n8n-nodes-base.openWeatherMap",
+          "typeVersion": 1,
+          "position": [
+            208,
+            0
+          ],
+          "id": "332962e8-a379-4cc3-afa0-141db9849f24",
+          "name": "OpenWeatherMap",
+          "credentials": {
+            "openWeatherMapApi": {
+              "id": "rXQ05BCnYwhjcZbJ",
+              "name": "My_weather_key"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "assignments": {
+              "assignments": [
+                {
+                  "id": "27422e76-48cb-4dcc-a4dd-1f1e9a1ce861",
+                  "name": "weather_summary",
+                  "value": "=Current Temp: {{ $json.main.temp }}°C. Condition: {{ $json.weather[0].description }}",
+                  "type": "string"
+                }
+              ]
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.set",
+          "typeVersion": 3.4,
+          "position": [
+            416,
+            0
+          ],
+          "id": "06350ad2-c221-405e-a2bb-f5ef372f967a",
+          "name": "Edit Fields"
+        },
+        {
+          "parameters": {
+            "fromEmail": "mukeshwork6@gmail.com",
+            "toEmail": "jngmmukesh@gmail.com",
+            "subject": "Today Weather Report",
+            "html": "=<p>Hello Mukesh,</p>\n<p style=\"font-size: 16px; color: #333;\">{{ $json.weather_summary }}</p>\n<p>This report was automatically generated by n8n.</p>",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.emailSend",
+          "typeVersion": 2.1,
+          "position": [
+            624,
+            0
+          ],
+          "id": "e93c9989-2240-4841-a4e1-13aaf35edcf2",
+          "name": "Send email",
+          "webhookId": "ddc90f07-a601-40f8-a1f5-7c63e0bb6cae",
+          "credentials": {
+            "smtp": {
+              "id": "yk7PzBTQrorwRAlX",
+              "name": "My_Gmail_SMTP"
+            }
+          }
+        }
+      ],
+      "connections": {
+        "Schedule Trigger": {
+          "main": [
+            [
+              {
+                "node": "OpenWeatherMap",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "OpenWeatherMap": {
+          "main": [
+            [
+              {
+                "node": "Edit Fields",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Edit Fields": {
+          "main": [
+            [
+              {
+                "node": "Send email",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1",
+        "timezone": "Asia/Kolkata",
+        "callerPolicy": "workflowsFromSameOwner",
+        "availableInMCP": false
+      },
+      "staticData": {
+        "node:Schedule Trigger": {
+          "recurrenceRules": []
+        }
+      },
+      "meta": {
+        "templateCredsSetupCompleted": true
+      },
+      "pinData": {},
+      "versionId": "7e84d347-45fa-4850-8b3a-e2bd45361482",
+      "triggerCount": 1,
+      "shared": [
+        {
+          "createdAt": "2025-10-26T10:53:19.106Z",
+          "updatedAt": "2025-10-26T10:53:19.106Z",
+          "role": "workflow:owner",
+          "workflowId": "BSHPwONU1CaLPAGW",
+          "projectId": "7fQJAf9vEuQVS2B5"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "createdAt": "2025-10-26T12:56:17.851Z",
+      "updatedAt": "2025-10-26T12:56:17.851Z",
+      "id": "KjArqjcWmhDb0D9i",
+      "name": "Daily_Weather_Report",
+      "active": false,
+      "isArchived": false,
+      "nodes": [
+        {
+          "parameters": {
+            "rule": {
+              "interval": [
+                {
+                  "triggerAtHour": 17
+                }
+              ]
+            }
+          },
+          "type": "n8n-nodes-base.scheduleTrigger",
+          "typeVersion": 1.2,
+          "position": [
+            48,
+            32
+          ],
+          "id": "0d545a0c-baaf-4895-9741-9c4199879476",
+          "name": "Schedule Trigger"
+        },
+        {
+          "parameters": {
+            "cityName": "Tirupati"
+          },
+          "type": "n8n-nodes-base.openWeatherMap",
+          "typeVersion": 1,
+          "position": [
+            256,
+            32
+          ],
+          "id": "78df9b47-eb06-46ec-9c1d-e24be47f6c78",
+          "name": "OpenWeatherMap",
+          "credentials": {
+            "openWeatherMapApi": {
+              "id": "rXQ05BCnYwhjcZbJ",
+              "name": "My_weather_key"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "assignments": {
+              "assignments": [
+                {
+                  "id": "27422e76-48cb-4dcc-a4dd-1f1e9a1ce861",
+                  "name": "weather_summary",
+                  "value": "=Current Temp: {{ $json.main.temp }}°C. Condition: {{ $json.weather[0].description }}",
+                  "type": "string"
+                }
+              ]
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.set",
+          "typeVersion": 3.4,
+          "position": [
+            464,
+            32
+          ],
+          "id": "ecdc1485-e39c-414c-a27f-08c7e2cbc2d4",
+          "name": "Edit Fields"
+        },
+        {
+          "parameters": {
+            "fromEmail": "mukeshwork6@gmail.com",
+            "toEmail": "jngmmukesh@gmail.com",
+            "subject": "Today Weather Report",
+            "html": "=<p>Hello Mukesh,</p>\n<p style=\"font-size: 16px; color: #333;\">{{ $json.weather_summary }}</p>\n<p>This report was automatically generated by n8n.</p>",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.emailSend",
+          "typeVersion": 2.1,
+          "position": [
+            672,
+            32
+          ],
+          "id": "522a1e12-3014-4733-9cc9-ccbcdfde76e7",
+          "name": "Send email",
+          "webhookId": "ddc90f07-a601-40f8-a1f5-7c63e0bb6cae",
+          "credentials": {
+            "smtp": {
+              "id": "yk7PzBTQrorwRAlX",
+              "name": "My_Gmail_SMTP"
+            }
+          }
+        }
+      ],
+      "connections": {
+        "Schedule Trigger": {
+          "main": [
+            [
+              {
+                "node": "OpenWeatherMap",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "OpenWeatherMap": {
+          "main": [
+            [
+              {
+                "node": "Edit Fields",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Edit Fields": {
+          "main": [
+            [
+              {
+                "node": "Send email",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1"
+      },
+      "staticData": null,
+      "meta": null,
+      "pinData": {},
+      "versionId": "e1da7c8d-0da4-4afd-8a00-f80db74b9251",
+      "triggerCount": 0,
+      "shared": [
+        {
+          "createdAt": "2025-10-26T12:56:17.867Z",
+          "updatedAt": "2025-10-26T12:56:17.867Z",
+          "role": "workflow:owner",
+          "workflowId": "KjArqjcWmhDb0D9i",
+          "projectId": "7fQJAf9vEuQVS2B5"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "createdAt": "2025-10-26T09:07:49.775Z",
+      "updatedAt": "2025-10-26T09:36:12.000Z",
+      "id": "M0QjxpcUe9IoZRiB",
+      "name": "My workflow",
+      "active": false,
+      "isArchived": true,
+      "nodes": [],
+      "connections": {},
+      "settings": {
+        "executionOrder": "v1"
+      },
+      "staticData": null,
+      "meta": {
+        "templateCredsSetupCompleted": true
+      },
+      "pinData": {},
+      "versionId": "5bfc2931-640b-44e1-a60a-f4b958c15f7f",
+      "triggerCount": 0,
+      "shared": [
+        {
+          "createdAt": "2025-10-26T09:07:49.787Z",
+          "updatedAt": "2025-10-26T09:07:49.787Z",
+          "role": "workflow:owner",
+          "workflowId": "M0QjxpcUe9IoZRiB",
+          "projectId": "7fQJAf9vEuQVS2B5"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "createdAt": "2025-10-26T13:07:24.204Z",
+      "updatedAt": "2025-10-26T13:23:28.000Z",
+      "id": "aUcHYTvRCIa3HeLr",
+      "name": "My workflow 3",
+      "active": false,
+      "isArchived": false,
+      "nodes": [
+        {
+          "parameters": {
+            "rule": {
+              "interval": [
+                {}
+              ]
+            }
+          },
+          "type": "n8n-nodes-base.scheduleTrigger",
+          "typeVersion": 1.2,
+          "position": [
+            0,
+            0
+          ],
+          "id": "dd8b515b-eb5e-4661-96ef-a1aada8d6c2d",
+          "name": "Schedule Trigger"
+        },
+        {
+          "parameters": {
+            "url": "http://localhost:5678/api/v1/workflows",
+            "sendHeaders": true,
+            "headerParameters": {
+              "parameters": [
+                {
+                  "name": "X-N8N-API-KEY",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYjgyOTM0Yi03MTY5LTQ4ZGQtYTZjNi01MTdmM2ZiZmJmMzMiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzYxNDgzNzg0LCJleHAiOjE3NjkyMzA4MDB9.dAT6Bn0IOtgkiLSBq4FLw4CHHByJ0V3dEkZ2aTAP11Q"
+                }
+              ]
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.2,
+          "position": [
+            144,
+            0
+          ],
+          "id": "f144a124-4b24-40a5-abcc-a01ed90f0c77",
+          "name": "HTTP Request"
+        },
+        {
+          "parameters": {
+            "resource": "file",
+            "owner": {
+              "__rl": true,
+              "value": "Mukesh77-code",
+              "mode": "list"
+            },
+            "repository": {
+              "__rl": true,
+              "value": "n8n-_Projects",
+              "mode": "list",
+              "cachedResultName": "n8n-_Projects",
+              "cachedResultUrl": "https://github.com/Mukesh77-code/n8n-_Projects"
+            },
+            "filePath": "=workflows/{{ $json.name }}.json",
+            "fileContent": "={{ JSON.stringify($json, null, 2) }}",
+            "commitMessage": "=Automated Backup: {{ $json.name }} on {{ $now }}"
+          },
+          "type": "n8n-nodes-base.github",
+          "typeVersion": 1.1,
+          "position": [
+            352,
+            0
+          ],
+          "id": "f716d461-e61e-437c-aa27-cb38ca3c84ad",
+          "name": "Create a file",
+          "webhookId": "fd3102a0-bc1c-4c88-9f0c-61e5054f08af",
+          "credentials": {
+            "githubApi": {
+              "id": "pdvMiJUzLwWiU855",
+              "name": "GitHub account"
+            }
+          }
+        }
+      ],
+      "connections": {
+        "Schedule Trigger": {
+          "main": [
+            [
+              {
+                "node": "HTTP Request",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "HTTP Request": {
+          "main": [
+            [
+              {
+                "node": "Create a file",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1"
+      },
+      "staticData": null,
+      "meta": {
+        "templateCredsSetupCompleted": true
+      },
+      "pinData": {},
+      "versionId": "5c6101cd-f102-4860-b355-0dc93aaa87af",
+      "triggerCount": 0,
+      "shared": [
+        {
+          "createdAt": "2025-10-26T13:07:24.215Z",
+          "updatedAt": "2025-10-26T13:07:24.215Z",
+          "role": "workflow:owner",
+          "workflowId": "aUcHYTvRCIa3HeLr",
+          "projectId": "7fQJAf9vEuQVS2B5"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "createdAt": "2025-10-26T09:38:27.584Z",
+      "updatedAt": "2025-10-26T12:56:34.000Z",
+      "id": "qF8jRz2wRGTEB1Wf",
+      "name": "Http request",
+      "active": true,
+      "isArchived": false,
+      "nodes": [
+        {
+          "parameters": {
+            "rule": {
+              "interval": [
+                {}
+              ]
+            }
+          },
+          "type": "n8n-nodes-base.scheduleTrigger",
+          "typeVersion": 1.2,
+          "position": [
+            -32,
+            -128
+          ],
+          "id": "6c15c05a-a1b6-4183-8e07-01b8fa09849b",
+          "name": "Schedule Trigger"
+        },
+        {
+          "parameters": {
+            "url": "https://api.apis.guru/v2/list.json",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.2,
+          "position": [
+            176,
+            -128
+          ],
+          "id": "20af27c3-80ad-4e0e-97c9-bb6d6eba369c",
+          "name": "HTTP Request"
+        }
+      ],
+      "connections": {
+        "Schedule Trigger": {
+          "main": [
+            [
+              {
+                "node": "HTTP Request",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "HTTP Request": {
+          "main": [
+            []
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1"
+      },
+      "staticData": {
+        "node:Schedule Trigger": {
+          "recurrenceRules": []
+        }
+      },
+      "meta": null,
+      "pinData": {},
+      "versionId": "2b4e164d-5f5b-485a-88b2-850c38806341",
+      "triggerCount": 1,
+      "shared": [
+        {
+          "createdAt": "2025-10-26T09:38:27.593Z",
+          "updatedAt": "2025-10-26T09:38:27.593Z",
+          "role": "workflow:owner",
+          "workflowId": "qF8jRz2wRGTEB1Wf",
+          "projectId": "7fQJAf9vEuQVS2B5"
+        }
+      ],
+      "tags": []
+    },
+    {
+      "createdAt": "2025-10-26T09:17:47.846Z",
+      "updatedAt": "2025-10-26T12:56:39.000Z",
+      "id": "tdXJsdXWbci2PkvW",
+      "name": "hello n8n",
+      "active": false,
+      "isArchived": false,
+      "nodes": [
+        {
+          "parameters": {
+            "rule": {
+              "interval": [
+                {}
+              ]
+            }
+          },
+          "type": "n8n-nodes-base.scheduleTrigger",
+          "typeVersion": 1.2,
+          "position": [
+            0,
+            0
+          ],
+          "id": "a270f427-bc40-4e8b-8bd5-40ef71cae16c",
+          "name": "Schedule Trigger"
+        },
+        {
+          "parameters": {
+            "assignments": {
+              "assignments": [
+                {
+                  "id": "361e9365-d649-402e-a648-6b4b67e58e54",
+                  "name": "message",
+                  "value": "Hello n8n is running!",
+                  "type": "string"
+                },
+                {
+                  "id": "abb59e67-39c5-48f9-9fbc-e460ecaadd10",
+                  "name": "Month",
+                  "value": "={{ $json.Month }}",
+                  "type": "string"
+                },
+                {
+                  "id": "8815d024-44bd-409a-97cc-fb7f20f9fb27",
+                  "name": "Year",
+                  "value": "={{ $json.Year }}",
+                  "type": "string"
+                },
+                {
+                  "id": "8041ab05-6ae8-4316-a12b-baed60011882",
+                  "name": "Minute",
+                  "value": "={{ $json.Minute }}",
+                  "type": "string"
+                }
+              ]
+            },
+            "includeOtherFields": true,
+            "include": "selected",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.set",
+          "typeVersion": 3.4,
+          "position": [
+            208,
+            0
+          ],
+          "id": "453b01b8-62a4-4d6b-b532-afb3609f9063",
+          "name": "Edit Fields"
+        }
+      ],
+      "connections": {
+        "Schedule Trigger": {
+          "main": [
+            [
+              {
+                "node": "Edit Fields",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1"
+      },
+      "staticData": {
+        "node:Schedule Trigger": {
+          "recurrenceRules": []
+        }
+      },
+      "meta": null,
+      "pinData": {},
+      "versionId": "3d61c2b6-f95d-46d5-811f-e3826dc88ce5",
+      "triggerCount": 1,
+      "shared": [
+        {
+          "createdAt": "2025-10-26T09:17:47.856Z",
+          "updatedAt": "2025-10-26T09:17:47.856Z",
+          "role": "workflow:owner",
+          "workflowId": "tdXJsdXWbci2PkvW",
+          "projectId": "7fQJAf9vEuQVS2B5"
+        }
+      ],
+      "tags": []
+    }
+  ],
+  "nextCursor": null
+}
