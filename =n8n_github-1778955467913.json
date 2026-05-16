@@ -1,0 +1,430 @@
+{
+  "updatedAt": "2026-05-16T18:17:41.547Z",
+  "createdAt": "2025-10-26T13:07:24.204Z",
+  "id": "aUcHYTvRCIa3HeLr",
+  "name": "n8n_github",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "dd8b515b-eb5e-4661-96ef-a1aada8d6c2d",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:5678/api/v1/workflows",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-N8N-API-KEY",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYjgyOTM0Yi03MTY5LTQ4ZGQtYTZjNi01MTdmM2ZiZmJmMzMiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwianRpIjoiMTJkNDAyZDItY2MyZC00NWYyLWJjZDItYmU5MzRlODA2YWYyIiwiaWF0IjoxNzc4OTUzNjIwLCJleHAiOjE3ODE0OTYwMDB9.a60kK9DRyKwwr-N0PWuFB3pnFQ2vgCA-9vbK5H7Trmc"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        144,
+        0
+      ],
+      "id": "f144a124-4b24-40a5-abcc-a01ed90f0c77",
+      "name": "HTTP Request",
+      "credentials": {
+        "githubApi": {
+          "id": "pdvMiJUzLwWiU855",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return items[0].json.data.map(workflow => ({ json: workflow }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        352,
+        0
+      ],
+      "id": "e26527b5-4ff3-4643-943a-3b99fb363287",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        560,
+        0
+      ],
+      "id": "fdeac9cb-2560-4c00-b262-99e1fccb00b8",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "owner": {
+          "__rl": true,
+          "value": "Mukesh77-code",
+          "mode": "list",
+          "cachedResultName": "Mukesh77-code",
+          "cachedResultUrl": "https://github.com/Mukesh77-code"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "n8n_Projects",
+          "mode": "list",
+          "cachedResultName": "n8n_Projects",
+          "cachedResultUrl": "https://github.com/Mukesh77-code/n8n_Projects"
+        },
+        "filePath": "=={{ $json.name.replace(/[^a-zA-Z0-9-_]/g, '_') + '-' + Date.now() + '.json' }}",
+        "fileContent": "={{ JSON.stringify($json, null, 2) }}",
+        "commitMessage": "=Automated Backup: {{ $json.name }} on {{ $now.toFormat('yyyy-MM-dd HH:mm') }}"
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        800,
+        -32
+      ],
+      "id": "4efa83fb-e099-434d-ab68-08115fdc4ae6",
+      "name": "Create a file",
+      "webhookId": "344af606-66cb-420a-b7ed-da35dc2b30a0",
+      "credentials": {
+        "githubApi": {
+          "id": "pdvMiJUzLwWiU855",
+          "name": "GitHub account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Create a file",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "c31b7bbd-487d-454e-b3fd-d4210a0db080",
+  "activeVersionId": "9397aee0-aea7-4f37-9e74-b92f1dbd09ee",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-10-26T13:07:24.215Z",
+      "createdAt": "2025-10-26T13:07:24.215Z",
+      "role": "workflow:owner",
+      "workflowId": "aUcHYTvRCIa3HeLr",
+      "projectId": "7fQJAf9vEuQVS2B5"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2025-10-26T18:20:42.447Z",
+    "createdAt": "2025-10-26T18:20:42.447Z",
+    "versionId": "9397aee0-aea7-4f37-9e74-b92f1dbd09ee",
+    "workflowId": "aUcHYTvRCIa3HeLr",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {}
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          0
+        ],
+        "id": "dd8b515b-eb5e-4661-96ef-a1aada8d6c2d",
+        "name": "Schedule Trigger"
+      },
+      {
+        "parameters": {
+          "url": "http://localhost:5678/api/v1/workflows",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "X-N8N-API-KEY",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYjgyOTM0Yi03MTY5LTQ4ZGQtYTZjNi01MTdmM2ZiZmJmMzMiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzYxNDgzNzg0LCJleHAiOjE3NjkyMzA4MDB9.dAT6Bn0IOtgkiLSBq4FLw4CHHByJ0V3dEkZ2aTAP11Q"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          144,
+          0
+        ],
+        "id": "f144a124-4b24-40a5-abcc-a01ed90f0c77",
+        "name": "HTTP Request"
+      },
+      {
+        "parameters": {
+          "jsCode": "return items[0].json.data.map(workflow => ({ json: workflow }));"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          352,
+          0
+        ],
+        "id": "e26527b5-4ff3-4643-943a-3b99fb363287",
+        "name": "Code in JavaScript"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          560,
+          0
+        ],
+        "id": "fdeac9cb-2560-4c00-b262-99e1fccb00b8",
+        "name": "Loop Over Items"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "c07f66b4-f479-4765-ae75-2ea8409da3e2",
+                "leftValue": "={{ $json.updatedAt.toMilliseconds() }}",
+                "rightValue": "={{ $input.first().json.timestamp.toMilliseconds() }}",
+                "operator": {
+                  "type": "number",
+                  "operation": "gt"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          768,
+          80
+        ],
+        "id": "fe3e9585-e162-4a6b-b698-5a68bb40788d",
+        "name": "If"
+      },
+      {
+        "parameters": {
+          "resource": "file",
+          "operation": "edit",
+          "owner": {
+            "__rl": true,
+            "value": "Mukesh77-code",
+            "mode": "list",
+            "cachedResultName": "Mukesh77-code",
+            "cachedResultUrl": "https://github.com/Mukesh77-code"
+          },
+          "repository": {
+            "__rl": true,
+            "value": "n8n_Projects",
+            "mode": "list",
+            "cachedResultName": "n8n_Projects",
+            "cachedResultUrl": "https://github.com/Mukesh77-code/n8n_Projects"
+          },
+          "filePath": "={{ $json.name }}.json",
+          "fileContent": "={{ JSON.stringify($json, null, 2) }}",
+          "commitMessage": "=Automated Backup: {{ $json.name }} on {{ $now.toFormat('yyyy-MM-dd HH:mm') }}"
+        },
+        "type": "n8n-nodes-base.github",
+        "typeVersion": 1.1,
+        "position": [
+          1040,
+          -32
+        ],
+        "id": "4efa83fb-e099-434d-ab68-08115fdc4ae6",
+        "name": "Edit a file",
+        "webhookId": "344af606-66cb-420a-b7ed-da35dc2b30a0",
+        "credentials": {
+          "githubApi": {
+            "id": "pdvMiJUzLwWiU855",
+            "name": "GitHub account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request": {
+        "main": [
+          [
+            {
+              "node": "Code in JavaScript",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code in JavaScript": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop Over Items": {
+        "main": [
+          [
+            {
+              "node": "Edit a file",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Edit a file",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Edit a file",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Jangam Mukesh",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "tags": []
+}
