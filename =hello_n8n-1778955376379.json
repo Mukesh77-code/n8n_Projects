@@ -1,0 +1,191 @@
+{
+  "updatedAt": "2025-10-26T13:33:46.000Z",
+  "createdAt": "2025-10-26T09:17:47.846Z",
+  "id": "tdXJsdXWbci2PkvW",
+  "name": "hello n8n",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a270f427-bc40-4e8b-8bd5-40ef71cae16c",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "361e9365-d649-402e-a648-6b4b67e58e54",
+              "name": "message",
+              "value": "Hello n8n is running!",
+              "type": "string"
+            },
+            {
+              "id": "abb59e67-39c5-48f9-9fbc-e460ecaadd10",
+              "name": "Month",
+              "value": "={{ $json.Month }}",
+              "type": "string"
+            },
+            {
+              "id": "8815d024-44bd-409a-97cc-fb7f20f9fb27",
+              "name": "Year",
+              "value": "={{ $json.Year }}",
+              "type": "string"
+            },
+            {
+              "id": "8041ab05-6ae8-4316-a12b-baed60011882",
+              "name": "Minute",
+              "value": "={{ $json.Minute }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "include": "selected",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "453b01b8-62a4-4d6b-b532-afb3609f9063",
+      "name": "Edit Fields"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": null,
+  "pinData": {},
+  "versionId": "3d61c2b6-f95d-46d5-811f-e3826dc88ce5",
+  "activeVersionId": "3d61c2b6-f95d-46d5-811f-e3826dc88ce5",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-10-26T09:17:47.856Z",
+      "createdAt": "2025-10-26T09:17:47.856Z",
+      "role": "workflow:owner",
+      "workflowId": "tdXJsdXWbci2PkvW",
+      "projectId": "7fQJAf9vEuQVS2B5"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-05-06T15:07:26.220Z",
+    "createdAt": "2026-05-06T15:07:26.220Z",
+    "versionId": "3d61c2b6-f95d-46d5-811f-e3826dc88ce5",
+    "workflowId": "tdXJsdXWbci2PkvW",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {}
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          0,
+          0
+        ],
+        "id": "a270f427-bc40-4e8b-8bd5-40ef71cae16c",
+        "name": "Schedule Trigger"
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "361e9365-d649-402e-a648-6b4b67e58e54",
+                "name": "message",
+                "value": "Hello n8n is running!",
+                "type": "string"
+              },
+              {
+                "id": "abb59e67-39c5-48f9-9fbc-e460ecaadd10",
+                "name": "Month",
+                "value": "={{ $json.Month }}",
+                "type": "string"
+              },
+              {
+                "id": "8815d024-44bd-409a-97cc-fb7f20f9fb27",
+                "name": "Year",
+                "value": "={{ $json.Year }}",
+                "type": "string"
+              },
+              {
+                "id": "8041ab05-6ae8-4316-a12b-baed60011882",
+                "name": "Minute",
+                "value": "={{ $json.Minute }}",
+                "type": "string"
+              }
+            ]
+          },
+          "includeOtherFields": true,
+          "include": "selected",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          208,
+          0
+        ],
+        "id": "453b01b8-62a4-4d6b-b532-afb3609f9063",
+        "name": "Edit Fields"
+      }
+    ],
+    "connections": {
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "system migration",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "tags": []
+}
