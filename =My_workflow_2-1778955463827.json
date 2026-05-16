@@ -1,0 +1,135 @@
+{
+  "updatedAt": "2025-10-26T12:41:09.000Z",
+  "createdAt": "2025-10-26T11:54:03.120Z",
+  "id": "1ZfVbrPt7SMFkhU1",
+  "name": "My workflow 2",
+  "active": false,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a59d0ae3-49c1-42ee-b71e-4517bbb1b4bc",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:5678/api/v1/workflows",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ 'Basic ' + $base64.encode('YOUR_USERNAME:YOUR_PASSWORD') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "61177ae9-5f4a-41cb-a7a6-b8e54ecdd852",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "owner": {
+          "__rl": true,
+          "value": "Mukesh77-code",
+          "mode": "list",
+          "cachedResultName": "Mukesh77-code",
+          "cachedResultUrl": "https://github.com/Mukesh77-code"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "Weather_mail",
+          "mode": "list",
+          "cachedResultName": "Weather_mail",
+          "cachedResultUrl": "https://github.com/Mukesh77-code/Weather_mail"
+        },
+        "filePath": "=workflows/{{ $json.name }}.json",
+        "fileContent": "n8n projects",
+        "commitMessage": "My n8n github connection"
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "ffa3ece2-fc1b-4634-b8fb-e2228060f792",
+      "name": "Create a file",
+      "webhookId": "ba7d34c6-1185-4c2a-bdae-6845aab2fa4f",
+      "credentials": {
+        "githubApi": {
+          "id": "pdvMiJUzLwWiU855",
+          "name": "GitHub account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Create a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "d346a93c-c502-47f8-aa35-71ed1aec9b62",
+  "activeVersionId": null,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-10-26T11:54:03.133Z",
+      "createdAt": "2025-10-26T11:54:03.133Z",
+      "role": "workflow:owner",
+      "workflowId": "1ZfVbrPt7SMFkhU1",
+      "projectId": "7fQJAf9vEuQVS2B5"
+    }
+  ],
+  "activeVersion": null,
+  "tags": []
+}
