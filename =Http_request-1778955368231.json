@@ -1,0 +1,143 @@
+{
+  "updatedAt": "2025-10-26T12:56:34.000Z",
+  "createdAt": "2025-10-26T09:38:27.584Z",
+  "id": "qF8jRz2wRGTEB1Wf",
+  "name": "Http request",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -32,
+        -128
+      ],
+      "id": "6c15c05a-a1b6-4183-8e07-01b8fa09849b",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://api.apis.guru/v2/list.json",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        176,
+        -128
+      ],
+      "id": "20af27c3-80ad-4e0e-97c9-bb6d6eba369c",
+      "name": "HTTP Request"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": null,
+  "pinData": {},
+  "versionId": "2b4e164d-5f5b-485a-88b2-850c38806341",
+  "activeVersionId": "2b4e164d-5f5b-485a-88b2-850c38806341",
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2025-10-26T09:38:27.593Z",
+      "createdAt": "2025-10-26T09:38:27.593Z",
+      "role": "workflow:owner",
+      "workflowId": "qF8jRz2wRGTEB1Wf",
+      "projectId": "7fQJAf9vEuQVS2B5"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2025-10-26T10:12:57.732Z",
+    "createdAt": "2025-10-26T10:12:57.732Z",
+    "versionId": "2b4e164d-5f5b-485a-88b2-850c38806341",
+    "workflowId": "qF8jRz2wRGTEB1Wf",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {}
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -32,
+          -128
+        ],
+        "id": "6c15c05a-a1b6-4183-8e07-01b8fa09849b",
+        "name": "Schedule Trigger"
+      },
+      {
+        "parameters": {
+          "url": "https://api.apis.guru/v2/list.json",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          176,
+          -128
+        ],
+        "id": "20af27c3-80ad-4e0e-97c9-bb6d6eba369c",
+        "name": "HTTP Request"
+      }
+    ],
+    "connections": {
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request": {
+        "main": [
+          []
+        ]
+      }
+    },
+    "authors": "Jangam Mukesh",
+    "name": null,
+    "description": null,
+    "autosaved": false
+  },
+  "tags": []
+}
