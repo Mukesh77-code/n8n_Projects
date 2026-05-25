@@ -38,24 +38,8 @@ n8n Workflow Changes
  Push to GitHub Repository
           ↓
  Version Controlled Backup
-⚙️ Installation & Setup
-1️⃣ Clone Repository
-git clone https://github.com/your-username/n8n-github-sync.git
-2️⃣ Install n8n
-npm install n8n -g
-3️⃣ Configure GitHub Token
 
 Generate a Personal Access Token from:
-
-GitHub Developer Settings
-
-Add the token inside your n8n credentials.
-
-4️⃣ Import Workflow
-Open n8n dashboard
-Import workflow JSON file
-Configure repository details
-Enable automation trigger
 🚀 Workflow Process
 User modifies or creates workflows in n8n
 Workflow trigger detects changes
